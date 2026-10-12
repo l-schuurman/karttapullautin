@@ -44,6 +44,10 @@ use crate::vegetation;
 const LAZ_BUFFER_SIZE: usize =
     LAZ_BUFFER_MEMORY_BYTES / (size_of::<las::Point>() + size_of::<XyzRecord>());
 
+// returned when zip (shapefile) inputs are given to a build without the `shapefile` feature
+const SHAPEFILE_FEATURE_DISABLED: &str =
+    "Zip files were given, but pullauta was built without the `shapefile` feature";
+
 /// Launches threads and coordinates the logic for processing multiple files in parallell.
 /// When it returns, all files have been processed and output files have been generated according to
 /// the Config.
@@ -277,6 +281,9 @@ pub fn process_zip(
         } else {
             crate::shapefile::render(fs, config, tmpfolder, true).unwrap();
         }
+    }
+    if !cfg!(feature = "shapefile") && !batch && !filenames.is_empty() {
+        return Err(anyhow::anyhow!(SHAPEFILE_FEATURE_DISABLED).into());
     }
 
     info!("Rendering png map with depressions");
