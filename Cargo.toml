@@ -11,10 +11,6 @@ keywords = ["map", "mapping", "lidar", "orienteering", "laz", "las"]
 categories = ["command-line-utilities"]
 publish = false
 
-[features]
-default = ["shapefile"]
-shapefile = ["dep:tiny-skia", "dep:shapefile", "dep:zip"]
-
 # Slower to compile, faster to run. Combine with RUSTFLAGS="-C target-cpu=native"
 # for a build tuned to the local machine.
 [profile.release]
@@ -38,8 +34,8 @@ las = { version = "0.11", features = ["laz", "laz-parallel"] }
 rand = "0.10"
 rust-ini = "0.21"
 rustc-hash = "2.0"
-shapefile = { version = "0.9.0", optional = true }
-tiny-skia = { version = "0.12", optional = true }
+shapefile = "0.9.0"
+tiny-skia = "0.12"
 zip = { version = "8.3", default-features = false, features = [
 	"bzip2",
 	"deflate",
@@ -47,8 +43,7 @@ zip = { version = "8.3", default-features = false, features = [
 	"lzma",
 	"zstd",
 	"xz",
-
-], optional = true }
+] }
 log = "0.4"
 env_logger = "0.11"
 

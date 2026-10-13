@@ -21,5 +21,4 @@ pub mod util;
 pub mod vec2d;
 pub mod vegetation;
 
-#[cfg(feature = "shapefile")]
 pub mod shapefile;
