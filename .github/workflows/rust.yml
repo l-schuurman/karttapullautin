@@ -19,10 +19,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@1.97
+        with:
+          targets: wasm32-wasip1, wasm32-unknown-unknown
       - uses: Swatinem/rust-cache@v2
 
       - name: Check
         run: cargo check --all-features --all-targets
+
+      - name: Check WebAssembly targets
+        run: |
+          cargo check --target wasm32-wasip1 --all-features --all-targets
+          cargo check --target wasm32-unknown-unknown --all-features --all-targets
 
       - name: Build
         run: cargo build
